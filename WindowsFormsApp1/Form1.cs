@@ -43,15 +43,15 @@ namespace WindowsFormsApp1
             view = new View();
             int X = 100;
             int Y = 100;
-            int Z = 2;
+            int Z = 8;
             int arraySize = X * Y * Z;
             int []array = new int[arraySize];
             Random random = new Random();
-
+            
             for (int i=0; i<arraySize; i++) {
                 array[i] = Math.Abs(random.Next());
             }
-            trackBar1.Maximum = bin.getZ();
+            trackBar1.Maximum = Z-1;
 
             using (BinaryWriter writer = new BinaryWriter(File.Open("tomogram.bin", FileMode.Create)))
             {
@@ -63,7 +63,7 @@ namespace WindowsFormsApp1
                     writer.Write(value);
                 }
             }
-
+            Console.WriteLine(trackBar1.Maximum);
         }
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
@@ -106,6 +106,7 @@ namespace WindowsFormsApp1
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             currentLayer = trackBar1.Value;
+            Console.WriteLine(currentLayer);
             needReload = true;
         }
 
@@ -130,6 +131,12 @@ namespace WindowsFormsApp1
                 loaded = true;
                 glControl1.Invalidate();
             }
+        }
+
+        private void Form1_Load_1(object sender, EventArgs e)
+        {
+            Application.Idle += Application_Idle;
+
         }
     }
 }

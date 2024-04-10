@@ -114,7 +114,6 @@ namespace WindowsFormsApp1
                     GL.Vertex2(x_coord + 1, y_coord);
                 }
             GL.End();
-
         }
     }
 }
