@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -19,6 +20,7 @@ namespace WindowsFormsApp1
         {
             if (File.Exists(path))
             {
+                int sum = 0;
                 BinaryReader reader =
                     new BinaryReader(File.Open(path, FileMode.Open));
                 X = reader.ReadInt32();
@@ -30,6 +32,8 @@ namespace WindowsFormsApp1
                 {
                     array[i] = reader.ReadInt16();
                 }
+                for(int i=0;i<arraySize; i++) { sum += array[i]; }
+                Console.WriteLine(sum);
             }
 
         }

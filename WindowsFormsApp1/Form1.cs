@@ -41,10 +41,16 @@ namespace WindowsFormsApp1
             InitializeComponent();
             bin = new Bin();
             view = new View();
-            int X = 2;
-            int Y = 2;
+            int X = 100;
+            int Y = 100;
             int Z = 2;
-            short[] array = { 1, 2, 3, 4, 5, 6, 7, 8 };
+            int arraySize = X * Y * Z;
+            int []array = new int[arraySize];
+            Random random = new Random();
+
+            for (int i=0; i<arraySize; i++) {
+                array[i] = Math.Abs(random.Next());
+            }
             trackBar1.Maximum = bin.getZ();
 
             using (BinaryWriter writer = new BinaryWriter(File.Open("tomogram.bin", FileMode.Create)))
@@ -105,12 +111,12 @@ namespace WindowsFormsApp1
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            switcher = true;
+            switcher = false;
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            switcher = false;
+            switcher = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
