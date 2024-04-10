@@ -17,6 +17,7 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
+        
         bool loaded = false;
         bool needReload = false;
         bool switcher;
@@ -25,8 +26,10 @@ namespace WindowsFormsApp1
         Bin bin;
         View view;
         int currentLayer = 0;
-
-      void displayFPS()
+        int min, width;
+       public int getWidth() {  return width; }
+       public int getMin() { return min; }
+        void displayFPS()
         {
             if (DateTime.Now > NextFPSUpdate)
             {
@@ -40,9 +43,9 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
             bin = new Bin();
-            view = new View();
-            int X = 100;
-            int Y = 100;
+            view = new View(this);
+            int X = 1920;
+            int Y = 1080;
             int Z = 8;
             int arraySize = X * Y * Z;
             int []array = new int[arraySize];
@@ -63,7 +66,7 @@ namespace WindowsFormsApp1
                     writer.Write(value);
                 }
             }
-            Console.WriteLine(trackBar1.Maximum);
+            Console.WriteLine("Max of TrackBar: "+trackBar1.Maximum);
         }
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
@@ -109,7 +112,17 @@ namespace WindowsFormsApp1
             Console.WriteLine(currentLayer);
             needReload = true;
         }
+        private void trackBar2_Scroll(object sender, EventArgs e)
+        {
+            min=trackBar2.Value;
+            label1.Text=trackBar2.Value.ToString();
+        }
 
+        private void trackBar3_Scroll(object sender, EventArgs e)
+        {
+            width = trackBar3.Value;
+            label2.Text=trackBar3.Value.ToString();
+        }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             switcher = false;
@@ -138,5 +151,17 @@ namespace WindowsFormsApp1
             Application.Idle += Application_Idle;
 
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void glControl1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

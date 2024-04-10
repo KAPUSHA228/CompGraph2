@@ -33,7 +33,7 @@ namespace WindowsFormsApp1
                     array[i] = reader.ReadInt16();
                 }
                 for(int i=0;i<arraySize; i++) { sum += array[i]; }
-                Console.WriteLine(sum);
+                Console.WriteLine("Sum of array: "+sum);
             }
 
         }
