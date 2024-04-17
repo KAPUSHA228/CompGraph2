@@ -27,13 +27,13 @@ namespace WindowsFormsApp1
         View view;
         int currentLayer = 0;
         int min, width;
-       public int getWidth() {  return width; }
-       public int getMin() { return min; }
+        public int getWidth() {  return width; }
+        public int getMin() { return min; }
         void displayFPS()
         {
             if (DateTime.Now > NextFPSUpdate)
             {
-                this.Text = String.Format("CT Visualizer (fps={0}", FrameCount);
+                this.Text = String.Format("CT Visualizer (fps={0})", FrameCount);
                 NextFPSUpdate = DateTime.Now.AddSeconds(1);
                 FrameCount = 0;
             }
@@ -44,9 +44,9 @@ namespace WindowsFormsApp1
             InitializeComponent();
             bin = new Bin();
             view = new View(this);
-            int X = 200;
-            int Y = 100;
-            int Z = 1;
+            int X = 2560;
+            int Y = 1080;
+            int Z = 8;
             int arraySize = X * Y * Z;
             int []array = new int[arraySize];
             Random random = new Random();
@@ -154,7 +154,7 @@ namespace WindowsFormsApp1
                 glControl1.Invalidate();
             }
             trackBar1.Maximum = bin.getZ() - 1;
-            Console.WriteLine("Max of TrackBar: " + (trackBar1.Maximum + 1));
+            
         }
 
         private void Form1_Load_1(object sender, EventArgs e)

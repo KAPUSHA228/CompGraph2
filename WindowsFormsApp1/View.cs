@@ -90,26 +90,93 @@ namespace WindowsFormsApp1
         public void DrawQuadStrips(int layerNumber)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
             GL.Begin(BeginMode.QuadStrip);
-
-            for (int x_coord = 0; x_coord < Bin.X - 1; x_coord++)
+            Color transparentColor = Color.FromArgb(0, 0, 0, 0); // Прозрачность (alpha) = 0
+            bool rotate = true;
+            int x_coord, y_coord;
+            for ( x_coord = 0; x_coord <= Bin.X -1; x_coord++)
             {
-                GL.Vertex2(x_coord, 0);
-                GL.Vertex2(x_coord + 1, 0);
-                for (int y_coord = 0; y_coord < Bin.Y; y_coord++)
+                if (rotate)
                 {
-                    short value;
-                    //1 вершина
-                    value = Bin.array[x_coord + y_coord * Bin.X + layerNumber * Bin.X * Bin.Y];
-                    GL.Color3(TransferFunction(value, form1.getMin(), form1.getWidth()));
-                    GL.Vertex2(x_coord, y_coord);
-                    //4 вершина
-                    value = Bin.array[x_coord + 1 + y_coord * Bin.X + layerNumber * Bin.X * Bin.Y];
-                    GL.Color3(TransferFunction(value, form1.getMin(), form1.getWidth()));
-                    GL.Vertex2(x_coord + 1, y_coord);
+                    for (y_coord = 0; y_coord <= Bin.Y - 1; y_coord++)
+                    {
+                        if (y_coord == 0)
+                        {
+                            short value;
+                            //1 вершина
+                            value = Bin.array[x_coord + y_coord * Bin.X + layerNumber * Bin.X * Bin.Y];
+                            GL.Color3(TransferFunction(value, form1.getMin(), form1.getWidth()));
+                            GL.Vertex2(x_coord, y_coord);
+                            //2 вершина
+                            value = Bin.array[x_coord + (y_coord + 1) * Bin.X + layerNumber * Bin.X * Bin.Y];
+                            GL.Color3(TransferFunction(value, form1.getMin(), form1.getWidth()));
+                            GL.Vertex2(x_coord, y_coord + 1);
+                            //3 вершина
+                            value = Bin.array[x_coord + 1 + (y_coord + 1) * Bin.X + layerNumber * Bin.X * Bin.Y];
+                            GL.Color3(TransferFunction(value, form1.getMin(), form1.getWidth()));
+                            GL.Vertex2(x_coord + 1, y_coord + 1);
+                            //4 вершина
+                            value = Bin.array[x_coord + 1 + y_coord * Bin.X + layerNumber * Bin.X * Bin.Y];
+                            GL.Color3(TransferFunction(value, form1.getMin(), form1.getWidth()));
+                            GL.Vertex2(x_coord + 1, y_coord);
+                        }
+                        else
+                        {
+                            short value;
+                            //2 вершина
+                            value = Bin.array[x_coord + (y_coord + 1) * Bin.X + layerNumber * Bin.X * Bin.Y];
+                            GL.Color3(TransferFunction(value, form1.getMin(), form1.getWidth()));
+                            GL.Vertex2(x_coord, y_coord + 1);
+                            //3 вершина
+                            value = Bin.array[x_coord + 1 + (y_coord + 1) * Bin.X + layerNumber * Bin.X * Bin.Y];
+                            GL.Color3(TransferFunction(value, form1.getMin(), form1.getWidth()));
+                            GL.Vertex2(x_coord + 1, y_coord + 1);
+                        }
+                    }
+                    GL.Vertex2(x_coord+1, y_coord+1 );
+                    GL.Vertex2(x_coord+2, y_coord+1 );
+
+
                 }
-                
+                else {
+                    for (y_coord = Bin.Y; y_coord >=1; y_coord++)
+                    {
+                        if (y_coord == Bin.Y)
+                        {
+                            short value;
+                            //1 вершина
+                            value = Bin.array[x_coord + y_coord * Bin.X + layerNumber * Bin.X * Bin.Y];
+                            GL.Color3(TransferFunction(value, form1.getMin(), form1.getWidth()));
+                            GL.Vertex2(x_coord, y_coord);
+                            //2 вершина
+                            value = Bin.array[x_coord + (y_coord - 1) * Bin.X + layerNumber * Bin.X * Bin.Y];
+                            GL.Color3(TransferFunction(value, form1.getMin(), form1.getWidth()));
+                            GL.Vertex2(x_coord, y_coord - 1);
+                            //3 вершина
+                            value = Bin.array[x_coord + 1 + (y_coord - 1) * Bin.X + layerNumber * Bin.X * Bin.Y];
+                            GL.Color3(TransferFunction(value, form1.getMin(), form1.getWidth()));
+                            GL.Vertex2(x_coord + 1, y_coord - 1);
+                            //4 вершина
+                            value = Bin.array[x_coord + 1 + y_coord * Bin.X + layerNumber * Bin.X * Bin.Y];
+                            GL.Color3(TransferFunction(value, form1.getMin(), form1.getWidth()));
+                            GL.Vertex2(x_coord + 1, y_coord);
+                        }
+                        else {
+                            short value;
+                            //2 вершина
+                            value = Bin.array[x_coord + (y_coord - 1) * Bin.X + layerNumber * Bin.X * Bin.Y];
+                            GL.Color3(TransferFunction(value, form1.getMin(), form1.getWidth()));
+                            GL.Vertex2(x_coord, y_coord - 1);
+                            //3 вершина
+                            value = Bin.array[x_coord + 1 + (y_coord - 1) * Bin.X + layerNumber * Bin.X * Bin.Y];
+                            GL.Color3(TransferFunction(value, form1.getMin(), form1.getWidth()));
+                            GL.Vertex2(x_coord + 1, y_coord - 1);
+                        }
+                    }
+                }
+                GL.Vertex2(x_coord + 1, y_coord - 1);
+                GL.Vertex2(x_coord + 2, y_coord - 1);
+
             }
 
             GL.End();
@@ -120,8 +187,8 @@ namespace WindowsFormsApp1
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.Begin(BeginMode.Quads);
             GL.PointSize(10);
-            for (int x_coord = 0; x_coord < Bin.X - 1; x_coord++)
-                for (int y_coord = 0; y_coord < Bin.Y - 1; y_coord++)
+            for (int x_coord = 0; x_coord <= Bin.X - 1; x_coord++)
+                for (int y_coord = 0; y_coord <= Bin.Y - 1; y_coord++)
                 { 
                         short value;
                         //1 вершина
