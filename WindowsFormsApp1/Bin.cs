@@ -20,20 +20,15 @@ namespace WindowsFormsApp1
         {
             if (File.Exists(path))
             {
-                int sum = 0;
-                BinaryReader reader =
-                    new BinaryReader(File.Open(path, FileMode.Open));
+                BinaryReader reader = new BinaryReader(File.Open(path, FileMode.Open));
                 X = reader.ReadInt32();
                 Y = reader.ReadInt32();
                 Z = reader.ReadInt32();
                 int arraySize = X * Y * Z;
                 array = new short[arraySize];
-                for (int i = 0; i < arraySize; i++)
-                {
+                for (int i = 0; i < arraySize; i++)                
                     array[i] = reader.ReadInt16();
-                }
-                for(int i=0;i<arraySize; i++) { sum += array[i]; }
-                Console.WriteLine("Sum of array: "+sum);
+                
             }
 
         }

@@ -40,6 +40,7 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
@@ -47,11 +48,12 @@
             // 
             // glControl1
             // 
+            this.glControl1.AutoSize = true;
             this.glControl1.BackColor = System.Drawing.Color.Black;
-            this.glControl1.Location = new System.Drawing.Point(-2, 212);
+            this.glControl1.Location = new System.Drawing.Point(-2, 181);
             this.glControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.glControl1.Name = "glControl1";
-            this.glControl1.Size = new System.Drawing.Size(1061, 347);
+            this.glControl1.Size = new System.Drawing.Size(1061, 378);
             this.glControl1.TabIndex = 0;
             this.glControl1.VSync = false;
             this.glControl1.Load += new System.EventHandler(this.glControl1_Load);
@@ -161,11 +163,24 @@
             this.label2.TabIndex = 11;
             this.label2.Text = "0";
             // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(631, 18);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(88, 20);
+            this.radioButton3.TabIndex = 12;
+            this.radioButton3.TabStop = true;
+            this.radioButton3.Text = "QuadStrip";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1056, 559);
+            this.Controls.Add(this.radioButton3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox3);
@@ -203,6 +218,7 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.RadioButton radioButton3;
     }
 }
 

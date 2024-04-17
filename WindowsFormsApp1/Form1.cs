@@ -20,7 +20,7 @@ namespace WindowsFormsApp1
         
         bool loaded = false;
         bool needReload = false;
-        bool switcher;
+        short switcher;
         int FrameCount;
         DateTime NextFPSUpdate;
         Bin bin;
@@ -44,9 +44,9 @@ namespace WindowsFormsApp1
             InitializeComponent();
             bin = new Bin();
             view = new View(this);
-            int X = 1920;
-            int Y = 1080;
-            int Z = 8;
+            int X = 200;
+            int Y = 100;
+            int Z = 1;
             int arraySize = X * Y * Z;
             int []array = new int[arraySize];
             Random random = new Random();
@@ -54,7 +54,6 @@ namespace WindowsFormsApp1
             for (int i=0; i<arraySize; i++) {
                 array[i] = Math.Abs(random.Next());
             }
-            trackBar1.Maximum = Z-1;
 
             using (BinaryWriter writer = new BinaryWriter(File.Open("tomogram.bin", FileMode.Create)))
             {
@@ -66,12 +65,12 @@ namespace WindowsFormsApp1
                     writer.Write(value);
                 }
             }
-            Console.WriteLine("Max of TrackBar: "+trackBar1.Maximum);
         }
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {
-            if (switcher)
+
+            if (switcher==1)
             {
                 if (loaded)
                 {
@@ -85,11 +84,18 @@ namespace WindowsFormsApp1
                     glControl1.SwapBuffers();
                 }
             }
-            else
+            if(switcher==0)
             {
                 if (loaded)
                 {
                     view.DrawQuads(currentLayer);
+                    glControl1.SwapBuffers();
+                }
+            }
+            else {
+                if (loaded)
+                {
+                    view.DrawQuadStrips(currentLayer);
                     glControl1.SwapBuffers();
                 }
             }
@@ -125,14 +131,17 @@ namespace WindowsFormsApp1
         }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            switcher = false;
+            switcher = 0;
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            switcher = true;
+            switcher = 1;
         }
-
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            switcher = 2;
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -144,6 +153,8 @@ namespace WindowsFormsApp1
                 loaded = true;
                 glControl1.Invalidate();
             }
+            trackBar1.Maximum = bin.getZ() - 1;
+            Console.WriteLine("Max of TrackBar: " + (trackBar1.Maximum + 1));
         }
 
         private void Form1_Load_1(object sender, EventArgs e)
@@ -156,7 +167,6 @@ namespace WindowsFormsApp1
         {
 
         }
-
         private void glControl1_Load(object sender, EventArgs e)
         {
 
